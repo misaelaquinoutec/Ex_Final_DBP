@@ -1,7 +1,7 @@
-import { loginRequest, RegisterRequest, AuthResponse, Product, postPoductRequest, UpdateProductRequest } from "../types/types.tsx";
+import type { loginRequest, RegisterRequest, AuthResponse, Product, postPoductRequest, UpdateProductRequest, PageProductsResponse } from "../types/types.tsx";
 
-const API_BASE_URL = "";
-const get AuthHeaders = () => {
+const API_BASE_URL = "https://cs2031-2026-1-pc2-techstore-production.up.railway.app";
+const AuthHeaders = () => {
     const token = localStorage.getItem("token");
     return {
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const get AuthHeaders = () => {
 
 export const apiservises = {
     async login(data: loginRequest): Promise<AuthResponse> {
-        return fetch( "" , {
+        return fetch( `${API_BASE_URL}/auth/login` , {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const apiservises = {
     },
 
     async register(data: RegisterRequest): Promise<AuthResponse> {
-        return fetch( "" , {
+        return fetch( `${API_BASE_URL}/auth/register` , {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -40,8 +40,8 @@ export const apiservises = {
         });
     },
 
-    async getProducts(): Promise<Product[]> {
-        return fetch( "" , {
+    async getProducts(page: number = 0, size: number = 10): Promise<PageProductsResponse> {
+        return fetch( `${API_BASE_URL}/products?page=${page}&size=${size}` , {
             method: "GET",
             headers: AuthHeaders(),
         }).then((response) => {
@@ -62,7 +62,7 @@ export const apiservises = {
             }
             return response.json();
         });
-    }
+    },
 
     async createProduct(data: postPoductRequest): Promise<Product> {
         return fetch( `${API_BASE_URL}/products` , {
@@ -100,4 +100,4 @@ export const apiservises = {
             }
         });
     },
-},
+}

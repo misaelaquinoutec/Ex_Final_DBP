@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Products from './views/Products';
 import Login from './views/login';
-import Register  from './views/register';
+import { Register } from './views/Register';
 import './App.css';
 
 function App() {
